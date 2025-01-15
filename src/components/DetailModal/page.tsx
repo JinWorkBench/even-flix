@@ -1,5 +1,6 @@
 import React, {
 	Dispatch,
+	FC,
 	SetStateAction,
 	useEffect,
 	useRef,
@@ -10,29 +11,46 @@ import ModalHeader from "./components/ModalHeader";
 import ModalPoster from "./components/ModalPoster";
 import ModalPosterButtons from "./components/ModalPosterButtons";
 import ModalInfoSummary from "./components/ModalInfoSummary";
-import { mapMovie, Movie } from "./Model/VideoDetail";
+import { mapMovie, mapTV, MediaType, Movie, Series } from "./Model/VideoDetail";
 import ModalInfoDetail from "./components/ModalInfoDetail";
 
-const DetailModal = ({
-	setIsModalOpen,
-}: {
+interface DetailModalProps {
+	// id: int,
+	mediaType: MediaType;
 	setIsModalOpen: Dispatch<SetStateAction<boolean>>;
-}) => {
+}
+
+const DetailModal: FC<DetailModalProps> = ({ mediaType, setIsModalOpen }) => {
 	const ref = useRef<HTMLDivElement | null>(null);
-	const [video, setVideo] = useState<Movie | null>(null);
+	const [video, setVideo] = useState<Movie | Series | null>(null);
 
 	useOnClickOutside({ ref: ref, handler: () => setIsModalOpen(false) });
 
 	useEffect(() => {
 		console.log("open");
-		fetchJSON();
+		if (mediaType === MediaType.MOVIE) {
+			fetchMovieJSON();
+		} else if (mediaType === MediaType.TV) {
+			fetchTVJSON();
+		}
 	}, []);
 
-	const fetchJSON = async () => {
+	const fetchMovieJSON = async () => {
 		try {
 			const response = await fetch("../json/movie.json");
 			const data = await response.json();
 			const mappedMovie = mapMovie(data);
+			setVideo(mappedMovie);
+		} catch (error) {
+			console.log("Error fetch data", error);
+		}
+	};
+
+	const fetchTVJSON = async () => {
+		try {
+			const response = await fetch("../json/series.json");
+			const data = await response.json();
+			const mappedMovie = mapTV(data);
 			setVideo(mappedMovie);
 		} catch (error) {
 			console.log("Error fetch data", error);
