@@ -1,12 +1,14 @@
 import React, { FC } from "react";
 import { MediaType, Movie, Series } from "../Model/VideoDetail";
+import { Cast } from "../Model/Credit";
 
 interface ModalInfoSummaryProps {
 	video: Movie | Series;
+	casts: Cast[];
 }
 
 // movie 정보 받아와서 id로 credit, keyword 받아오기
-const ModalInfoSummary: FC<ModalInfoSummaryProps> = ({ video }) => {
+const ModalInfoSummary: FC<ModalInfoSummaryProps> = ({ video, casts }) => {
 	const convertMinutesToHoursAndMinutes = (totalMinutes: number): string => {
 		const hours = Math.floor(totalMinutes / 60); // 시간을 계산
 		const minutes = totalMinutes % 60; // 남은 분 계산
@@ -22,16 +24,25 @@ const ModalInfoSummary: FC<ModalInfoSummaryProps> = ({ video }) => {
 	const getRuntimeOrSesaons = (video: Movie | Series): string => {
 		switch (video.type) {
 			case MediaType.MOVIE:
-        const movie = video as Movie
+				const movie = video as Movie;
 				return convertMinutesToHoursAndMinutes(movie.runtime);
 			case MediaType.TV:
-        const series = video as Series
+				const series = video as Series;
 				if (series.numberOfSeasons > 1) {
 					return `시즌 ${series.numberOfSeasons}개`;
 				} else {
 					return `에피소드 ${series.numberOfEpisodes}개`;
 				}
 		}
+	};
+
+	const scrollToBottom = () => {
+		console.log("scrollToBottom");
+		const modal: HTMLDivElement = document.querySelector(".wrapper-model") as HTMLDivElement;
+		modal.scrollTo({
+			top: modal.scrollHeight,
+			behavior: "smooth",
+		});
 	};
 
 	return (
@@ -45,11 +56,22 @@ const ModalInfoSummary: FC<ModalInfoSummaryProps> = ({ video }) => {
 			</div>
 			<div className="flex flex-col gap-y-3 text-sm">
 				<p className="text-sm text-gray-500">
-					출연: {/* map 필요 */}
-					{/* credit에서 상위 세명 */}
-					<a className="text-white hover:underline" href="/">
-						미야자키하야오
-					</a>
+					출연:
+					{casts.slice(0, 3).map((cast) => (
+						<a key={cast.id} className="text-white hover:underline" href="/">
+							{`${cast.name}, `}
+						</a>
+					))}
+					{casts.length > 3 && (
+						<button
+							className="text-white italic hover:underline"
+							onClick={() => {
+								scrollToBottom();
+							}}
+						>
+							더 보기
+						</button>
+					)}
 				</p>
 				<p className="text-sm text-gray-500">
 					장르:{" "}
