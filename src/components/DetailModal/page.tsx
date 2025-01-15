@@ -13,6 +13,8 @@ import ModalPosterButtons from "./components/ModalPosterButtons";
 import ModalInfoSummary from "./components/ModalInfoSummary";
 import { mapMovie, mapTV, MediaType, Movie, Series } from "./Model/VideoDetail";
 import ModalInfoDetail from "./components/ModalInfoDetail";
+import { Credit, mapCredit } from "./Model/Credit";
+import { Keywords, mapKeywords } from "./Model/Keyword";
 
 interface DetailModalProps {
 	// id: int,
@@ -23,11 +25,15 @@ interface DetailModalProps {
 const DetailModal: FC<DetailModalProps> = ({ mediaType, setIsModalOpen }) => {
 	const ref = useRef<HTMLDivElement | null>(null);
 	const [video, setVideo] = useState<Movie | Series | null>(null);
+	const [credit, setCredit] = useState<Credit | null>(null);
+	const [keyword, setKeyword] = useState<Keywords | null>(null);
 
 	useOnClickOutside({ ref: ref, handler: () => setIsModalOpen(false) });
 
 	useEffect(() => {
 		console.log("open");
+		fetchCredit();
+		fetchKeyword();
 		if (mediaType === MediaType.MOVIE) {
 			fetchMovieJSON();
 		} else if (mediaType === MediaType.TV) {
@@ -52,6 +58,28 @@ const DetailModal: FC<DetailModalProps> = ({ mediaType, setIsModalOpen }) => {
 			const data = await response.json();
 			const mappedMovie = mapTV(data);
 			setVideo(mappedMovie);
+		} catch (error) {
+			console.log("Error fetch data", error);
+		}
+	};
+
+	const fetchCredit = async () => {
+		try {
+			const response = await fetch("../json/credit.json");
+			const data = await response.json();
+			const mappedCredit = mapCredit(data);
+			setCredit(mappedCredit);
+		} catch (error) {
+			console.log("Error fetch data", error);
+		}
+	};
+
+	const fetchKeyword = async () => {
+		try {
+			const response = await fetch("../json/keywords.json");
+			const data = await response.json();
+			const mappedKeywords = mapKeywords(data);
+			setKeyword(mappedKeywords);
 		} catch (error) {
 			console.log("Error fetch data", error);
 		}
