@@ -1,8 +1,8 @@
 import React, { FC } from "react";
-import { Movie } from "../Model/VideoDetail";
+import { MediaType, Movie, Series } from "../Model/VideoDetail";
 
 interface ModalInfoSummaryProps {
-	video: Movie;
+	video: Movie | Series;
 }
 
 // movie 정보 받아와서 id로 credit, keyword 받아오기
@@ -19,17 +19,26 @@ const ModalInfoSummary: FC<ModalInfoSummaryProps> = ({ video }) => {
 		return year;
 	};
 
+	const getRuntimeOrSesaons = (video: Movie | Series): string => {
+		switch (video.type) {
+			case MediaType.MOVIE:
+        const movie = video as Movie
+				return convertMinutesToHoursAndMinutes(movie.runtime);
+			case MediaType.TV:
+        const series = video as Series
+				if (series.numberOfSeasons > 1) {
+					return `시즌 ${series.numberOfSeasons}개`;
+				} else {
+					return `에피소드 ${series.numberOfEpisodes}개`;
+				}
+		}
+	};
+
 	return (
 		<div className="modal__content grid grid-cols-3 gap-x-14 px-12">
 			<div className="modal__content-info col-span-2">
-				{/* (release_date | last_air_date) (number_of_seasons | number_of_episodes | runtime)  */}
 				<p className="release-date last_air_date runtime text-gray-400">
-					{convertReleaseDate(video.releaseDate)}{" "}
-					{video.runtime ? (
-						convertMinutesToHoursAndMinutes(video.runtime)
-					) : (
-						<div>none...</div>
-					)}
+					{convertReleaseDate(video.releaseDate)} {getRuntimeOrSesaons(video)}
 				</p>
 				<p className="text-3xl text-white">{video.title}</p>
 				<p className="text-sm text-white">{video.overview}</p>
