@@ -11,9 +11,25 @@ const DetailModal = ({
 	setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
 	const ref = useRef<HTMLDivElement | null>(null);
+	const [video, setVideo] = useState<VideoDetail | null>(null);
 
 	useOnClickOutside({ ref: ref, handler: () => setIsModalOpen(false) });
 
+	useEffect(() => {
+		console.log("open");
+		fetchJSON();
+	}, []);
+
+	const fetchJSON = async () => {
+		try {
+		const response = await fetch("../json/movie.json");
+		const data = await response.json();
+		const mappedMovie = mapMovie(data);
+		setVideo(mappedMovie);
+		} catch (error) {
+			console.log("Error fetch data", error);
+		}
+	};
 	return (
 		<div className="presenter z-10 absolute min-h-screen">
 			<div className="wrapper-model fixed inset-0 bg-black bg-opacity-70 flex items-start justify-center overflow-auto">

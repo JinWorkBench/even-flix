@@ -1,10 +1,12 @@
 import React, { FC } from "react";
+import { VideoDetail } from "../Model/VideoDetail";
 
 interface ModalPosterProps {
 	children: React.ReactNode;
+	video: VideoDetail;
 }
 
-const ModalPoster: FC<ModalPosterProps> = ({ children }) => {
+const ModalPoster: FC<ModalPosterProps> = ({ children, video }) => {
 	return (
 		<div className="modal__poster-container relative">
 			<div className="modal__poster-blur absolute bottom-0 inset-x-0 h-1/2 bg-gradient-to-t from-neutral-900"></div>
