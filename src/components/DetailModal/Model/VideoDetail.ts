@@ -14,7 +14,7 @@ export interface BaseMedia {
 }
 
 export interface Movie extends BaseMedia {
-	runtime?: number; // 상영시간
+	runtime: number; // 상영시간
 	imdbID: string;
 	posterPath: string; // 포스터 이미지
 	tagline: string; // ?
