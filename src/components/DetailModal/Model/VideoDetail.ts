@@ -1,6 +1,6 @@
 export enum MediaType {
-	VIDEO = "video",
-	SERIES = "series",
+	MOVIE = "moive",
+	TV = "tv",
 }
 
 export interface BaseMedia {
@@ -13,7 +13,7 @@ export interface BaseMedia {
 	releaseDate: string; // 개봉일
 }
 
-export interface VideoDetail extends BaseMedia {
+export interface Movie extends BaseMedia {
 	runtime?: number; // 상영시간
 	imdbID: string;
 	posterPath: string; // 포스터 이미지
@@ -48,8 +48,8 @@ export interface Season {
 	posterPath: string;
 }
 
-export const mapMovie = (json: any): VideoDetail => ({
-	type: MediaType.VIDEO,
+export const mapMovie = (json: any): Movie => ({
+	type: MediaType.MOVIE,
 	id: json.id,
 	title: json.title,
 	backdropPath: json.backdrop_path,
@@ -66,8 +66,8 @@ export const mapMovie = (json: any): VideoDetail => ({
 	adult: json.adult,
 });
 
-export const mapSeries = (json: any): Series => ({
-	type: MediaType.SERIES,
+export const mapTV = (json: any): Series => ({
+	type: MediaType.TV,
 	id: json.id,
 	title: json.name,
 	backdropPath: json.backdrop_path,

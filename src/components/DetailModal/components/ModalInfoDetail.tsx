@@ -1,8 +1,8 @@
 import React, { FC } from "react";
-import { VideoDetail } from "../Model/VideoDetail";
+import { Movie } from "../Model/VideoDetail";
 
 interface ModalInfoDetailProps {
-	video: VideoDetail;
+	video: Movie;
 }
 
 const ModalInfoDetail: FC<ModalInfoDetailProps> = ({ video }) => {

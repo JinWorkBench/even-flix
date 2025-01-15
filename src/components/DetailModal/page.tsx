@@ -10,7 +10,7 @@ import ModalHeader from "./components/ModalHeader";
 import ModalPoster from "./components/ModalPoster";
 import ModalPosterButtons from "./components/ModalPosterButtons";
 import ModalInfoSummary from "./components/ModalInfoSummary";
-import { mapMovie, VideoDetail } from "./Model/VideoDetail";
+import { mapMovie, Movie } from "./Model/VideoDetail";
 import ModalInfoDetail from "./components/ModalInfoDetail";
 
 const DetailModal = ({
@@ -19,7 +19,7 @@ const DetailModal = ({
 	setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
 	const ref = useRef<HTMLDivElement | null>(null);
-	const [video, setVideo] = useState<VideoDetail | null>(null);
+	const [video, setVideo] = useState<Movie | null>(null);
 
 	useOnClickOutside({ ref: ref, handler: () => setIsModalOpen(false) });
 

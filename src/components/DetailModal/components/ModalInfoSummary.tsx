@@ -1,8 +1,8 @@
 import React, { FC } from "react";
-import { VideoDetail } from "../Model/VideoDetail";
+import { Movie } from "../Model/VideoDetail";
 
 interface ModalInfoSummaryProps {
-	video: VideoDetail;
+	video: Movie;
 }
 
 // movie 정보 받아와서 id로 credit, keyword 받아오기

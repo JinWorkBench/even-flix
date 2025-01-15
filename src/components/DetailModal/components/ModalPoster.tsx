@@ -1,9 +1,9 @@
 import React, { FC } from "react";
-import { VideoDetail } from "../Model/VideoDetail";
+import { Movie } from "../Model/VideoDetail";
 
 interface ModalPosterProps {
 	children: React.ReactNode;
-	video: VideoDetail;
+	video: Movie;
 }
 
 const ModalPoster: FC<ModalPosterProps> = ({ children, video }) => {
