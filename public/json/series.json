@@ -1,0 +1,79 @@
+{
+	"adult": false,
+	"backdrop_path": "/cSqUkhWH5seTIwtqUUAEBFjiLyh.jpg",
+	"created_by": [
+		{
+			"id": 1294471,
+			"credit_id": "677a62f8830a8f4cc766aacd",
+			"name": "황동혁",
+			"original_name": "황동혁",
+			"gender": 2,
+			"profile_path": "/xyr3b04ayyJtA5ZN3L0Af10WKIR.jpg"
+		}
+	],
+	"genres": [
+		{
+			"id": 10759,
+			"name": "Action & Adventure"
+		},
+		{
+			"id": 9648,
+			"name": "미스터리"
+		},
+		{
+			"id": 18,
+			"name": "드라마"
+		}
+	],
+	"homepage": "https://www.netflix.com/title/81040344",
+	"id": 93405,
+	"last_air_date": "2024-12-26",
+	"name": "오징어 게임",
+	"networks": [
+		{
+			"id": 213,
+			"logo_path": "/wwemzKWzjKYJFfCeiB57q3r4Bcm.png",
+			"name": "Netflix",
+			"origin_country": ""
+		}
+	],
+	"number_of_episodes": 22,
+	"number_of_seasons": 3,
+	"original_name": "오징어 게임",
+	"overview": "빚에 쫓기는 수백 명의 사람들이 서바이벌 게임에 뛰어든다. 거액의 상금으로 새로운 삶을 시작하기 위해. 하지만 모두 승자가 될 순 없는 법. 탈락하는 이들은 치명적인 결과를 각오해야 한다.",
+	"poster_path": "/yACIAqAkSLkX4coHafpyLWAtQjw.jpg",
+	"seasons": [
+		{
+			"air_date": "2021-09-17",
+			"episode_count": 9,
+			"id": 131977,
+			"name": "시즌 1",
+			"overview": "빚에 쫓기는 수백 명의 사람들이 서바이벌 게임에 뛰어든다. 거액의 상금으로 새로운 삶을 시작하기 위해. 하지만 모두 승자가 될 순 없는 법. 탈락하는 이들은 치명적인 결과를 각오해야 한다.",
+			"poster_path": "/wgrW3fMgmzOxYcVHBek5usvr4MH.jpg",
+			"season_number": 1,
+			"vote_average": 8.2
+		},
+		{
+			"air_date": "2024-12-26",
+			"episode_count": 7,
+			"id": 287516,
+			"name": "시즌 2",
+			"overview": "자﻿신﻿만﻿의 목﻿적﻿을 품﻿고 다﻿시 게﻿임﻿에 발﻿을 디﻿딘 기﻿훈. 더﻿욱 아﻿찔﻿한 위﻿험﻿과 가﻿혹﻿한 대﻿가, 피﻿할 수 없﻿는 운﻿명﻿이 기﻿다﻿린﻿다. 아﻿이﻿들 놀﻿이 뒤﻿에 숨﻿겨﻿진 격﻿렬﻿한 사﻿투﻿에 목﻿숨﻿을 걸﻿고, 처﻿절﻿하게 질﻿주﻿하﻿라!",
+			"poster_path": "/3XWmbNHuaDKGIbBhKhQhb8ukmec.jpg",
+			"season_number": 2,
+			"vote_average": 8.6
+		},
+		{
+			"air_date": "2025-06-27",
+			"episode_count": 6,
+			"id": 435948,
+			"name": "시즌 3",
+			"overview": "",
+			"poster_path": "/ioDSGDFPX08WO6PbnnS8BEK71uU.jpg",
+			"season_number": 3,
+			"vote_average": 0
+		}
+	],
+	"status": "Returning Series",
+	"tagline": "어른들의 동심이 파괴된다"
+}
