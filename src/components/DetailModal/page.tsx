@@ -87,7 +87,7 @@ const DetailModal: FC<DetailModalProps> = ({ mediaType, setIsModalOpen }) => {
 
 	return (
 		<div className="presenter z-10 absolute min-h-screen">
-			{video && credit ? (
+			{video && credit && keyword ? (
 				<div className="wrapper-model fixed inset-0 bg-black bg-opacity-70 flex items-start justify-center overflow-auto">
 					<div
 						className="modal relative bg-neutral-900 w-full max-w-6xl mt-8 mx-2 rounded-lg overflow-auto"
@@ -97,8 +97,8 @@ const DetailModal: FC<DetailModalProps> = ({ mediaType, setIsModalOpen }) => {
 						<ModalPoster video={video}>
 							<ModalPosterButtons />
 						</ModalPoster>
-						<ModalInfoSummary video={video} casts={credit.cast} />
-						<ModalInfoDetail video={video} credit={credit}/>
+						<ModalInfoSummary video={video} casts={credit.cast} keywords={keyword.keywords}/>
+						<ModalInfoDetail video={video} credit={credit} keywords={keyword.keywords}/>
 					</div>
 				</div>
 			) : (

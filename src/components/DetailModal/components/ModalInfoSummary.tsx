@@ -1,14 +1,20 @@
 import React, { FC } from "react";
 import { MediaType, Movie, Series } from "../Model/VideoDetail";
 import { Cast } from "../Model/Credit";
+import { Keyword } from "../Model/Keyword";
 
 interface ModalInfoSummaryProps {
 	video: Movie | Series;
 	casts: Cast[];
+	keywords: Keyword[];
 }
 
 // movie 정보 받아와서 id로 credit, keyword 받아오기
-const ModalInfoSummary: FC<ModalInfoSummaryProps> = ({ video, casts }) => {
+const ModalInfoSummary: FC<ModalInfoSummaryProps> = ({
+	video,
+	casts,
+	keywords,
+}) => {
 	const convertMinutesToHoursAndMinutes = (totalMinutes: number): string => {
 		const hours = Math.floor(totalMinutes / 60); // 시간을 계산
 		const minutes = totalMinutes % 60; // 남은 분 계산
@@ -38,7 +44,9 @@ const ModalInfoSummary: FC<ModalInfoSummaryProps> = ({ video, casts }) => {
 
 	const scrollToBottom = () => {
 		console.log("scrollToBottom");
-		const modal: HTMLDivElement = document.querySelector(".wrapper-model") as HTMLDivElement;
+		const modal: HTMLDivElement = document.querySelector(
+			".wrapper-model"
+		) as HTMLDivElement;
 		modal.scrollTo({
 			top: modal.scrollHeight,
 			behavior: "smooth",
@@ -83,11 +91,13 @@ const ModalInfoSummary: FC<ModalInfoSummaryProps> = ({ video, casts }) => {
 					))}
 				</p>
 				<p className="text-sm text-gray-500">
-					영화 특징: {/* map 필요 */}
-					{/* 뭔지 모르겟음 keywords? */}
-					<a className="text-white hover:underline" href="/">
-						상상의 나래
-					</a>
+					영화 특징:{" "}
+					{keywords.slice(0, 3).map((keyword, index) => (
+						<a key={keyword.id} className="text-white hover:underline" href="/">
+							{keyword.name}
+							{index < 2 && ", "}
+						</a>
+					))}
 				</p>
 			</div>
 		</div>

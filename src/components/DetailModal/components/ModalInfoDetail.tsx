@@ -1,13 +1,19 @@
 import React, { FC } from "react";
 import { Movie, Series } from "../Model/VideoDetail";
 import { Credit, Department } from "../Model/Credit";
+import { Keyword } from "../Model/Keyword";
 
 interface ModalInfoDetailProps {
 	video: Movie | Series;
 	credit: Credit;
+	keywords: Keyword[];
 }
 
-const ModalInfoDetail: FC<ModalInfoDetailProps> = ({ video, credit }) => {
+const ModalInfoDetail: FC<ModalInfoDetailProps> = ({
+	video,
+	credit,
+	keywords,
+}) => {
 	return (
 		<div className="flex flex-col gap-y-1 px-12 py-6">
 			<p className="text-xl text-white py-2">{`${video.title} 상세 정보`}</p>
@@ -53,10 +59,13 @@ const ModalInfoDetail: FC<ModalInfoDetailProps> = ({ video, credit }) => {
 				))}
 			</p>
 			<p className="text-sm text-gray-500">
-				영화 특징:
-				<a key={1} className="text-white hover:underline" href="/">
-					상상의 나래, 진심 어린
-				</a>
+				영화 특징:{" "}
+				{keywords.map((keyword, index) => (
+					<a key={keyword.id} className="text-white hover:underline" href="/">
+						{keyword.name}
+						{index < keywords.length - 1 && ", "}
+					</a>
+				))}
 			</p>
 		</div>
 	);
