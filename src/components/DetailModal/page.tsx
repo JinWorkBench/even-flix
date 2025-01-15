@@ -11,6 +11,7 @@ import ModalPoster from "./components/ModalPoster";
 import ModalPosterButtons from "./components/ModalPosterButtons";
 import ModalInfoSummary from "./components/ModalInfoSummary";
 import { mapMovie, VideoDetail } from "./Model/VideoDetail";
+import ModalInfoDetail from "./components/ModalInfoDetail";
 
 const DetailModal = ({
 	setIsModalOpen,
@@ -29,10 +30,10 @@ const DetailModal = ({
 
 	const fetchJSON = async () => {
 		try {
-		const response = await fetch("../json/movie.json");
-		const data = await response.json();
-		const mappedMovie = mapMovie(data);
-		setVideo(mappedMovie);
+			const response = await fetch("../json/movie.json");
+			const data = await response.json();
+			const mappedMovie = mapMovie(data);
+			setVideo(mappedMovie);
 		} catch (error) {
 			console.log("Error fetch data", error);
 		}
@@ -50,7 +51,8 @@ const DetailModal = ({
 						<ModalPoster video={video}>
 							<ModalPosterButtons />
 						</ModalPoster>
-						<ModalInfoSummary video={video}/>
+						<ModalInfoSummary video={video} />
+						<ModalInfoDetail video={video} />
 					</div>
 				</div>
 			) : (
