@@ -9,17 +9,18 @@ import { Swiper as SwiperType } from "swiper";
 import Poster from "./Poster";
 import "../styles/swiper.css";
 
-interface MovieOrSeries {
-  id: number;
-  posterUrl: string;
+interface PosterProps {
+	id: number;
+	poster_path: string;
 }
 
 interface PosterListProps {
-  title: string;
-  moviesAndSeries: MovieOrSeries[];
+	title: string;
+	posterProps: PosterProps[];
 }
 
-const PosterList: React.FC<PosterListProps> = ({ title, moviesAndSeries }) => {
+
+const PosterList: React.FC<PosterListProps> = ({ title, posterProps }) => {
   const prevRef = useRef<HTMLButtonElement | null>(null);
   const nextRef = useRef<HTMLButtonElement | null>(null);
   const paginationRef = useRef<HTMLDivElement | null>(null);
@@ -85,9 +86,9 @@ const PosterList: React.FC<PosterListProps> = ({ title, moviesAndSeries }) => {
             },
           }}
         >
-          {moviesAndSeries.map((item, index) => (
-            <SwiperSlide key={item.id}>
-              <Poster posterUrl={item.posterUrl} rank={index + 1} />
+          {posterProps.map((item, index) => (
+            <SwiperSlide >
+              <Poster id={item.id} poster_path={item.poster_path} rank={index + 1} />
             </SwiperSlide>
           ))}
         </Swiper>

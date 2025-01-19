@@ -18,7 +18,7 @@ const ModalEpisodes: FC<ModalEpisodesProps> = ({
 	selectedSeason,
 }) => {
 	const [season, setSeason] = useState(seasons[seasons.length - 1]);
-	const [showEpNumber, setShowEpNumber] = useState(5); // TODO: 10으로 늘려야함
+	const [isShowAll, setIsShowAll] = useState(false);
 
 	const handleSeasonSelect = (season: Season) => {
 		setSeason(season);
@@ -26,12 +26,7 @@ const ModalEpisodes: FC<ModalEpisodesProps> = ({
 	};
 
 	const handleExpanded = () => {
-		if (showEpNumber < episodes.episodes.length) {
-			// 전체 에피소드보다 적은 경우 더 보기 동작
-			setShowEpNumber((prev) => Math.min(prev + 5, episodes.episodes.length));
-		} else {
-			setShowEpNumber((prev) => Math.max(prev - 5, 5));
-		}
+		setIsShowAll(!isShowAll);
 	};
 
 	return (
@@ -48,14 +43,16 @@ const ModalEpisodes: FC<ModalEpisodesProps> = ({
 				<p className="text-sm pt-4">{`${season.name}:`}</p>
 			)}
 			<div className="flex flex-col justify-start flex-wrap pt-3">
-				{episodes.episodes.slice(0, showEpNumber).map((episode, index) => (
-					<ModalEpisode
-						key={episode.id}
-						backdropPath={backdropPath}
-						episode={episode}
-						isFocus={index === 0}
-					/>
-				))}
+				{(isShowAll ? episodes.episodes : episodes.episodes.slice(0, 5)).map(
+					(episode, index) => (
+						<ModalEpisode
+							key={episode.id}
+							backdropPath={backdropPath}
+							episode={episode}
+							isFocus={index === 0}
+						/>
+					)
+				)}
 			</div>
 			<div className="flex bottom-0 left-0 w-full h-0.5 bg-neutral-700 justify-center items-center ">
 				<button
@@ -67,7 +64,7 @@ const ModalEpisodes: FC<ModalEpisodesProps> = ({
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						className={`h-4 w-4 transition-transform ${
-							showEpNumber >= episodes.episodes.length ? "rotate-180" : ""
+							isShowAll ? "rotate-180" : ""
 						}`}
 						viewBox="0 0 24 24"
 						stroke="currentColor"

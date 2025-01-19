@@ -39,6 +39,11 @@ export interface CreatedBy {
 	name: string;
 }
 
+export interface Rank {
+	id: number;
+	rank: number;
+}
+
 export interface Season {
 	id: number;
 	name: string;

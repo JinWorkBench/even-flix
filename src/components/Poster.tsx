@@ -1,11 +1,11 @@
 import React from "react";
+import { Rank } from "../models/Media";
 
-interface PosterProps {
-  posterUrl: string;
-  rank: number;
+interface PosterProps extends Rank {
+	poster_path: string;
 }
 
-const Poster: React.FC<PosterProps> = ({ posterUrl, rank }) => {
+const Poster: React.FC<PosterProps> = ({ poster_path, rank }) => {
   const renderRankSVG = () => {
     switch (rank) {
       case 1:
@@ -178,7 +178,7 @@ const Poster: React.FC<PosterProps> = ({ posterUrl, rank }) => {
       <div className="flex-shrink-0 flex-1">{renderRankSVG()}</div>
       <div className="flex-1">
         <img
-          src={posterUrl}
+          src={poster_path}
           alt={`Poster rank ${rank}`}
           className="object-cover w-full h-full"
         />

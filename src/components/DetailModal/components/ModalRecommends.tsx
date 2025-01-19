@@ -7,15 +7,10 @@ interface ModalSimilarsProps {
 }
 
 const ModalSimilars: FC<ModalSimilarsProps> = ({ recommends }) => {
-	const [showEpNumber, setShowEpNumber] = useState(6);
+	const [isShowAll, setIsShowAll] = useState(false);
 
 	const handleExpanded = () => {
-		if (showEpNumber < recommends.length) {
-			// 전체 에피소드보다 적은 경우 더 보기 동작
-			setShowEpNumber(20);
-		} else {
-			setShowEpNumber(6);
-		}
+		setIsShowAll(!isShowAll);
 	};
 
 	return (
@@ -23,10 +18,10 @@ const ModalSimilars: FC<ModalSimilarsProps> = ({ recommends }) => {
 			<p className="text-xl font-semibold">함께 시청된 콘텐츠</p>
 			<div
 				className={`grid grid-cols-2 gap-4 pt-4 sm:grid-cols-3   ${
-					showEpNumber >= recommends.length ? "pb-28" : ""
+					isShowAll ? "pb-28" : ""
 				}`}
 			>
-				{recommends.slice(0, showEpNumber).map((recommend) => (
+				{(isShowAll ? recommends : recommends.slice(0, 5)).map((recommend) => (
 					<ModalRecommend key={recommend.id} recommend={recommend} />
 				))}
 			</div>
@@ -42,7 +37,7 @@ const ModalSimilars: FC<ModalSimilarsProps> = ({ recommends }) => {
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							className={`h-4 w-4 transition-transform ${
-								showEpNumber >= recommends.length ? "rotate-180" : ""
+								isShowAll ? "rotate-180" : ""
 							}`}
 							viewBox="0 0 24 24"
 							stroke="currentColor"

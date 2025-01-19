@@ -5,27 +5,27 @@ import CardList from "../../components/CardList";
 import instance from "../../api/axios";
 import PosterList from "../../components/PosterList";
 
-// props 타입 잊지 마세요!
-interface MovieOrSeries {
-  id: number;
-  backdrop_path: string;
-  poster_path: string;
-  origin_country?: string[];
+interface HomeMedia {
+	id: number;
+	title: string;
+	backdrop_path: string;
+	poster_path: string;
+	origin_country: string[];
 }
 
 const HomePage: React.FC = () => {
-  const [forYou, setForYou] = useState<MovieOrSeries[]>([]);
-  const [todayTop10SeriesKR, setTodayTop10SeriesKR] = useState<MovieOrSeries[]>(
+  const [forYou, setForYou] = useState<HomeMedia[]>([]);
+  const [todayTop10SeriesKR, setTodayTop10SeriesKR] = useState<HomeMedia[]>(
     []
   );
-  const [realitySeries, setRealitySeries] = useState<MovieOrSeries[]>([]);
-  const [topRatedSeries, setTopRatedSeries] = useState<MovieOrSeries[]>([]);
-  const [englishContents, setEnglishContents] = useState<MovieOrSeries[]>([]);
-  const [uSMovies, setUSMovies] = useState<MovieOrSeries[]>([]);
-  const [koreanSeries, setKoreanSeries] = useState<MovieOrSeries[]>([]);
-  const [popularMovies, setPopularMovies] = useState<MovieOrSeries[]>([]);
-  const [nowPlayingMovies, setNowPlayingMovies] = useState<MovieOrSeries[]>([]);
-  const [sFAndFantasySeries, setSFAndFantasySeries] = useState<MovieOrSeries[]>(
+  const [realitySeries, setRealitySeries] = useState<HomeMedia[]>([]);
+  const [topRatedSeries, setTopRatedSeries] = useState<HomeMedia[]>([]);
+  const [englishContents, setEnglishContents] = useState<HomeMedia[]>([]);
+  const [uSMovies, setUSMovies] = useState<HomeMedia[]>([]);
+  const [koreanSeries, setKoreanSeries] = useState<HomeMedia[]>([]);
+  const [popularMovies, setPopularMovies] = useState<HomeMedia[]>([]);
+  const [nowPlayingMovies, setNowPlayingMovies] = useState<HomeMedia[]>([]);
+  const [sFAndFantasySeries, setSFAndFantasySeries] = useState<HomeMedia[]>(
     []
   );
 
@@ -70,16 +70,16 @@ const HomePage: React.FC = () => {
         );
 
         const todayTop10SeriesDataKR = todayTop10SeriesData.filter(
-          (item: MovieOrSeries) => item.origin_country?.includes("KR")
+          (item: HomeMedia) => item.origin_country.includes("KR")
         );
 
-        let todayTop10SeriesFinalKR: MovieOrSeries[] = [];
+        let todayTop10SeriesFinalKR: HomeMedia[] = [];
         if (todayTop10SeriesDataKR.length >= 10) {
           todayTop10SeriesFinalKR = todayTop10SeriesDataKR;
         } else {
           const needed = 10 - todayTop10SeriesDataKR.length;
           const nonKrSeries = todayTop10SeriesData.filter(
-            (item: MovieOrSeries) => !item.origin_country?.includes("KR")
+            (item: HomeMedia) => !item.origin_country.includes("KR")
           );
           const fillOthers = nonKrSeries.slice(0, needed);
           todayTop10SeriesFinalKR = [...todayTop10SeriesDataKR, ...fillOthers];
@@ -204,73 +204,73 @@ const HomePage: React.FC = () => {
       <div className="mainbody relative z-5 pb-10">
         <CardList
           title="회원님을 위해 엄선한 오늘의 콘텐츠"
-          moviesAndSeries={forYou.map((item) => ({
+          cardProps={forYou.map((item) => ({
             id: item.id,
-            backdropUrl: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
+            backdrop_path: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
           }))}
         />
         <PosterList
           title="오늘 대한민국의 TOP 10 시리즈"
-          moviesAndSeries={todayTop10SeriesKR.map((item) => ({
+          posterProps={todayTop10SeriesKR.map((item) => ({
             id: item.id,
-            posterUrl: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+            poster_path: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
           }))}
         />
         <CardList
           title="재미를 주는 리얼리티 시리즈"
-          moviesAndSeries={realitySeries.map((item) => ({
+          cardProps={realitySeries.map((item) => ({
             id: item.id,
-            backdropUrl: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
+            backdrop_path: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
           }))}
         />
         <CardList
           title="평단의 찬사! 감명을 주는 시리즈"
-          moviesAndSeries={topRatedSeries.map((item) => ({
+          cardProps={topRatedSeries.map((item) => ({
             id: item.id,
-            backdropUrl: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
+            backdrop_path: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
           }))}
         />
         <CardList
           title="즐거운 영어 세상 속으로!"
-          moviesAndSeries={englishContents.map((item) => ({
+          cardProps={englishContents.map((item) => ({
             id: item.id,
-            backdropUrl: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
+            backdrop_path: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
           }))}
         />
         <CardList
           title="미국 영화"
-          moviesAndSeries={uSMovies.map((item) => ({
+          cardProps={uSMovies.map((item) => ({
             id: item.id,
-            backdropUrl: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
+            backdrop_path: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
           }))}
         />
 
         <CardList
           title="한국 시리즈"
-          moviesAndSeries={koreanSeries.map((item) => ({
+          cardProps={koreanSeries.map((item) => ({
             id: item.id,
-            backdropUrl: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
+            backdrop_path: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
           }))}
         />
         <PosterList
           title="오늘 전세계의 TOP 10 영화"
-          moviesAndSeries={popularMovies.map((item) => ({
+          posterProps={popularMovies.map((item) => ({
             id: item.id,
-            posterUrl: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+            poster_path: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
           }))}
         />
         <CardList
           title="지금 상영중인 영화"
-          moviesAndSeries={nowPlayingMovies.map((item) => ({
+          cardProps={nowPlayingMovies.map((item) => ({
             id: item.id,
-            backdropUrl: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
+            backdrop_path: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
           }))}
         />
         <CardList
           title="SF & 판타지 시리즈"
-          moviesAndSeries={sFAndFantasySeries.map((item) => ({
+          cardProps={sFAndFantasySeries.map((item) => ({
             id: item.id,
-            backdropUrl: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
+            backdrop_path: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
           }))}
         />
       </div>

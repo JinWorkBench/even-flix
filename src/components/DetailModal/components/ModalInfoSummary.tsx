@@ -55,7 +55,7 @@ const ModalInfoSummary: FC<ModalInfoSummaryProps> = ({
 			</div>
 			<div className="flex flex-col gap-y-3 text-sm">
 				<p className="text-sm text-gray-500">
-					출연:
+					출연:{" "}
 					{casts.slice(0, 3).map((cast) => (
 						<a key={cast.id} className="text-white hover:underline" href="/">
 							{`${cast.name}, `}
@@ -81,15 +81,21 @@ const ModalInfoSummary: FC<ModalInfoSummaryProps> = ({
 						</a>
 					))}
 				</p>
-				<p className="text-sm text-gray-500">
-					영화 특징:{" "}
-					{keywords.slice(0, 3).map((keyword, index) => (
-						<a key={keyword.id} className="text-white hover:underline" href="/">
-							{keyword.name}
-							{index < 2 && ", "}
-						</a>
-					))}
-				</p>
+				{keywords.length > 0 && (
+					<p className="text-sm text-gray-500">
+						영화 특징:{" "}
+						{keywords.slice(0, 3).map((keyword, index) => (
+							<a
+								key={keyword.id}
+								className="text-white hover:underline"
+								href="/"
+							>
+								{keyword.name}
+								{index < 2 && ", "}
+							</a>
+						))}
+					</p>
+				)}
 			</div>
 		</div>
 	);

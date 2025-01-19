@@ -15,7 +15,7 @@ import {
 } from "../../models/Media";
 import ModalInfoDetail from "./components/ModalInfoDetail";
 import { Credit, mapCredit } from "../../models/Credit";
-import { Keywords, mapKeywords } from "../../models/Keyword";
+import { Keyword, mapKeywords } from "../../models/Keyword";
 import ModalEpisodes from "./components/ModalEpisodes";
 import { Episodes, mapEpisodes } from "../../models/Episodes";
 import { Recommend, mapRecommend } from "../../models/Recommend";
@@ -34,7 +34,7 @@ const DetailModal: FC<DetailModalProps> = ({ mediaType }) => {
 	const [video, setVideo] = useState<Movie | Series | null>(null);
 	const [episodes, setEpisodes] = useState<Episodes | null>(null);
 	const [credit, setCredit] = useState<Credit | null>(null);
-	const [keyword, setKeyword] = useState<Keywords | null>(null);
+	const [keywords, setKeywords] = useState<Keyword[]>([]);
 	const [recommends, setRecommends] = useState<Recommend[]>([]);
 
 	useOnClickOutside({ ref: ref, handler: () => navigate(-1) });
@@ -43,94 +43,111 @@ const DetailModal: FC<DetailModalProps> = ({ mediaType }) => {
 		if (!id) {
 			throw new Error("ID is Missing!");
 		}
-		fetchCredit();
-		fetchKeyword();
-		fetchRecommend();
+		fetchCredit(id, mediaType);
+		fetchKeyword(id, mediaType);
+		fetchRecommend(id, mediaType);
 		if (mediaType === MediaType.MOVIE) {
 			fetchMovieJSON(id);
 		} else if (mediaType === MediaType.TV) {
-			fetchTVJSON();
-			fetchEpisodes();
+			fetchTVJSON(id);
 		}
-	}, []);
+	}, [id, mediaType]);
 
+	// 영화 호출
 	const fetchMovieJSON = async (id: string) => {
 		try {
 			const request = await axios.get(`/movie/${id}`);
 			const mappedMovie = mapMovie(request.data);
-			console.log(mappedMovie);
 			setVideo(mappedMovie);
 		} catch (error) {
 			console.log("Error fetch data", error);
 		}
 	};
 
-	const fetchTVJSON = async () => {
+	// 시리즈 호출
+	const fetchTVJSON = async (id: string) => {
 		try {
-			const response = await fetch("../json/series.json");
-			const data = await response.json();
-			const mappedMovie = mapTV(data);
-			setVideo(mappedMovie);
+			const request = await axios.get(`/tv/${id}`);
+			const mappedTV = mapTV(request.data);
+			setVideo(mappedTV);
+			fetchEpisodes(id, mappedTV.numberOfSeasons);
 		} catch (error) {
 			console.log("Error fetch data", error);
 		}
 	};
 
-	const fetchEpisodes = async () => {
+	// 시즌(TV일때만 호출)
+	const fetchEpisodes = async (id: string, seasonNumber: number) => {
 		try {
-			const response = await fetch("../json/season.json");
-			const data = await response.json();
-			const mappedSeason = mapEpisodes(data);
+			const request = await axios.get(
+				`/tv/${id}/season/${seasonNumber.toString()}`
+			);
+			const mappedSeason = mapEpisodes(request.data);
 			setEpisodes(mappedSeason);
 		} catch (error) {
 			console.log("Error fetch data", error);
 		}
 	};
 
-	const fetchCredit = async () => {
+	// 출연
+	const fetchCredit = async (id: string, movieType: MediaType) => {
+		const url =
+			mediaType === MediaType.MOVIE
+				? `/movie/${id}/credits`
+				: `/tv/${id}/credits`;
 		try {
-			const response = await fetch("../json/credit.json");
-			const data = await response.json();
-			const mappedCredit = mapCredit(data);
+			const request = await axios.get(url);
+			const mappedCredit = mapCredit(request.data);
 			setCredit(mappedCredit);
 		} catch (error) {
 			console.log("Error fetch data", error);
 		}
 	};
 
-	const fetchKeyword = async () => {
+	// 영화 특징
+	const fetchKeyword = async (id: string, movieType: MediaType) => {
+		const url =
+			mediaType === MediaType.MOVIE
+				? `/movie/${id}/keywords`
+				: `/tv/${id}/keywords`;
 		try {
-			const response = await fetch("../json/keywords.json");
-			const data = await response.json();
-			const mappedKeywords = mapKeywords(data);
-			setKeyword(mappedKeywords);
+			const request = await axios.get(url);
+			const mappedKeywords = mapKeywords(request.data);
+			setKeywords(mappedKeywords);
 		} catch (error) {
 			console.log("Error fetch data", error);
 		}
 	};
 
-	const fetchRecommend = async () => {
+	// 함께 시청된 콘텐츠
+	const fetchRecommend = async (id: string, movieType: MediaType) => {
+		const url =
+			mediaType === MediaType.MOVIE
+				? `/movie/${id}/recommendations`
+				: `/tv/${id}/recommendations`;
 		try {
-			const response = await fetch("../json/recommdation.json");
-			const data = await response.json();
-			const mappedRecommend = mapRecommend(data);
+			const request = await axios.get(url);
+			const mappedRecommend = mapRecommend(request.data);
 			setRecommends(mappedRecommend);
 		} catch (error) {
 			console.log("Error fetch data", error);
 		}
 	};
 
+	// 시즌 변경 시 호출
 	const handleSeasonSelect = (season: Season) => {
-		// API 연결 시 시즌 업데이트
-		console.log(season);
+		if (!id) {
+			throw new Error("ID is Missing!");
+		}
+		fetchEpisodes(id, season.seasonNumber);
 	};
 
 	return (
 		<div className="presenter z-10 absolute min-h-screen">
-			{video && credit && keyword ? (
+			{video && credit && keywords ? (
 				<div className="wrapper-model fixed inset-0 bg-black bg-opacity-70 flex items-start justify-center overflow-auto">
 					<div
-						className="modal relative bg-neutral-900 w-full max-w-6xl mt-8 mx-2 rounded-lg overflow-auto"
+						className="modal relative bg-neutral-900 w-full max-w-5xl mt-8 mx-2 rounded-lg overflow-auto"
 						ref={ref}
 					>
 						<ModalHeader />
@@ -140,7 +157,7 @@ const DetailModal: FC<DetailModalProps> = ({ mediaType }) => {
 						<ModalInfoSummary
 							video={video}
 							casts={credit.cast}
-							keywords={keyword.keywords}
+							keywords={keywords}
 						/>
 						{episodes && (
 							<ModalEpisodes
@@ -154,7 +171,7 @@ const DetailModal: FC<DetailModalProps> = ({ mediaType }) => {
 						<ModalInfoDetail
 							video={video}
 							credit={credit}
-							keywords={keyword.keywords}
+							keywords={keywords}
 						/>
 					</div>
 				</div>

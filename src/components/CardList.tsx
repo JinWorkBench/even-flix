@@ -10,17 +10,17 @@ import { Swiper as SwiperType } from "swiper";
 
 import "../styles/swiper.css";
 
-interface MovieOrSeries {
-  id: number;
-  backdropUrl: string;
+interface CardProps {
+	id: number;
+	backdrop_path: string;
 }
 
 interface CardListProps {
-  title: string;
-  moviesAndSeries: MovieOrSeries[];
+	title: string;
+	cardProps: CardProps[];
 }
 
-const CardList: React.FC<CardListProps> = ({ title, moviesAndSeries }) => {
+const CardList: React.FC<CardListProps> = ({ title, cardProps }) => {
   const prevRef = useRef<HTMLButtonElement | null>(null);
   const nextRef = useRef<HTMLButtonElement | null>(null);
   const paginationRef = useRef<HTMLDivElement | null>(null);
@@ -87,9 +87,9 @@ const CardList: React.FC<CardListProps> = ({ title, moviesAndSeries }) => {
             },
           }}
         >
-          {moviesAndSeries.map((item) => (
-            <SwiperSlide key={item.id}>
-              <Card backdropUrl={item.backdropUrl} />
+          {cardProps.map((item) => (
+            <SwiperSlide >
+              <Card id={item.id} backdropPath={item.backdrop_path} />
             </SwiperSlide>
           ))}
         </Swiper>
