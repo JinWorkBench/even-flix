@@ -41,7 +41,7 @@ const Profile = () => {
                             <a className="text-white cursor-pointer no-underline bg-transparent" href="/browse">
                                 <div className="relative">
                                     <div className="bg-gray-800 bg-no-repeat bg-cover border-none rounded-md box-border relative w-[10vw] h-[10vw] min-w-[84px] min-h-[84px] max-w-[200px] max-h-[200px] no-underline after:content-[''] after:absolute after:inset-0 after:block after:border-[0.3em] after:border-transparent after:rounded-md hover:after:border-white">
-                                        <img src="https://i.pinimg.com/236x/ff/e0/26/ffe026b8fd8eb99799a0fbae37f4cb1e.jpg" alt="이븐이2" />
+                                        <img src="https://i.namu.wiki/i/GnBAlUWDl8Js1StMnuzyfkkJR62gouPvWZTxL3HvKrnQRi9HgMdcGB9QHJGK-X52tZyQPexat_fj7rlRXlD1EA.webp" alt="이븐이2" />
                                     </div>
                                 </div>
                                 <span className="block text-gray-500 text-[1.3vw] leading-[1.2em] my-[0.6em] min-h-[1.8em] overflow-hidden text-center text-ellipsis sm:text-[12px]">
